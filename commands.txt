@@ -1,0 +1,113 @@
+chmod 600 /var/log/secure
+chmod 600 /var/log/messages
+chmod 600 /var/log/cron
+chmod 600 /var/log/lastlog
+gpg --quiet --with-fingerprint /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+gpg --quiet --with-fingerprint /etc/pki/rpm-gpg/RPM-GPG-KEY-centostesting
+sed -i 's/\(^gpgcheck=\).*/\gpgcheck=0/' /etc/yum.conf
+sed -i 's/\(^SELINUX=\).*/\SELINUX=permissive/' /etc/selinux/config
+sed -i '/^kernel.exec-shield/{h;s/=.*/=1/};${x;/^$/{s//kernel.exec-shield=1/;H};x}' /etc/sysctl.conf
+sed -i '/^kernel.randomize_va_space/{h;s/=.*/=2/};${x;/^$/{s//kernel.randomize_va_space=2/;H};x}' /etc/sysctl.conf
+yum erase telnet-server
+yum erase rsh-server
+yum erase rsh
+yum erase ypbind
+yum erase ypserv
+yum erase tftp
+yum erase tftp-server
+yum erase talk
+yum erase talk-server
+yum erase xinetd
+chkconfig chargen-dgram off
+chkconfig chargen-stream off
+chkconfig daytime-dgram off
+chkconfig daytime-stream off
+chkconfig echo-dgram off
+chkconfig echo-stream off
+chkconfig tcpmux-server off
+runlevel
+chkconfig avahi-daemon off
+chkconfig cups off
+yum erase dhcp
+sed -i '/^inet_interfaces/{h;s/=.*/=localhost/};${x;/^$/{s//inet_interfaces=localhost/;H};x}' /etc/postfix/main.cf
+sed -i '/^net.ipv4.conf.all.send_redirects/{h;s/=.*/=0/};${x;/^$/{s//net.ipv4.conf.all.send_redirects=0/;H};x}' /etc/sysctl.conf
+sed -i '/^net.ipv4.conf.default.send_redirects/{h;s/=.*/=0/};${x;/^$/{s//net.ipv4.conf.default.send_redirects=0/;H};x}' /etc/sysctl.conf
+/sbin/sysctl -w net.ipv4.conf.all.send_redirects=0 
+/sbin/sysctl -w net.ipv4.conf.default.send_redirects=0 
+/sbin/sysctl -w net.ipv4.route.flush=1
+sed -i '/^net.ipv4.ip_forward/{h;s/=.*/=0/};${x;/^$/{s//net.ipv4.ip_forward=0/;H};x}' /etc/sysctl.conf
+/sbin/sysctl -w net.ipv4.ip_forward=0 
+/sbin/sysctl -w net.ipv4.route.flush=1
+sed -i '/^net.ipv4.conf.all.accept_source_route/{h;s/=.*/=0/};${x;/^$/{s//net.ipv4.conf.all.accept_source_route=0/;H};x}' /etc/sysctl.conf
+sed -i '/^net.ipv4.conf.default.accept_source_route/{h;s/=.*/=0/};${x;/^$/{s//net.ipv4.conf.default.accept_source_route=0/;H};x}' /etc/sysctl.conf
+/sbin/sysctl -w net.ipv4.conf.all.accept_source_route=0 
+/sbin/sysctl -w net.ipv4.conf.default.accept_source_route=0 
+/sbin/sysctl -w net.ipv4.route.flush=1
+sed -i '/^net.ipv4.conf.all.accept_redirects/{h;s/=.*/=0/};${x;/^$/{s//net.ipv4.conf.all.accept_redirects=0/;H};x}' /etc/sysctl.conf
+sed -i '/^net.ipv4.conf.default.accept_redirects/{h;s/=.*/=0/};${x;/^$/{s//net.ipv4.conf.default.accept_redirects=0/;H};x}' /etc/sysctl.conf
+/sbin/sysctl -w net.ipv4.conf.all.accept_redirects=0 
+/sbin/sysctl -w net.ipv4.conf.default.accept_redirects=0 
+/sbin/sysctl -w net.ipv4.route.flush=1
+sed -i '/^net.ipv4.conf.all.secure_redirects/{h;s/=.*/=0/};${x;/^$/{s//net.ipv4.conf.all.secure_redirects=0/;H};x}' /etc/sysctl.conf
+sed -i '/^net.ipv4.conf.default.secure_redirects/{h;s/=.*/=0/};${x;/^$/{s//net.ipv4.conf.default.secure_redirects=0/;H};x}' /etc/sysctl.conf
+/sbin/sysctl -w net.ipv4.conf.all.secure_redirects=0 
+/sbin/sysctl -w net.ipv4.conf.default.secure_redirects=0 
+/sbin/sysctl -w net.ipv4.route.flush=1
+sed -i '/^net.ipv4.conf.all.log_martians/{h;s/=.*/=1/};${x;/^$/{s//net.ipv4.conf.all.log_martians=1/;H};x}' /etc/sysctl.conf
+sed -i '/^net.ipv4.conf.default.log_martians/{h;s/=.*/=1/};${x;/^$/{s//net.ipv4.conf.default.log_martians=1/;H};x}' /etc/sysctl.conf
+sed -i '/^net.ipv4.route.flush/{h;s/=.*/=1/};${x;/^$/{s//net.ipv4.route.flush=1/;H};x}' /etc/sysctl.conf
+/sbin/sysctl -w net.ipv4.conf.all.log_martians=1 
+/sbin/sysctl -w net.ipv4.conf.default.log_martians=1 
+/sbin/sysctl -w net.ipv4.route.flush=1
+sed -i '/^net.ipv4.icmp_echo_ignore_broadcasts/{h;s/=.*/=1/};${x;/^$/{s//net.ipv4.icmp_echo_ignore_broadcasts=1/;H};x}' /etc/sysctl.conf
+/sbin/sysctl -w net.ipv4.icmp_echo_ignore_broadcasts=1 
+/sbin/sysctl -w net.ipv4.route.flush=0
+sed -i '/^net.ipv4.icmp_ignore_bogus_error_responses/{h;s/=.*/=1/};${x;/^$/{s//net.ipv4.icmp_ignore_bogus_error_responses=1/;H};x}' /etc/sysctl.conf
+/sbin/sysctl -w net.ipv4.icmp_ignore_bogus_error_responses=1 
+/sbin/sysctl -w net.ipv4.route.flush=0
+sed -i '/^net.ipv4.tcp_syncookies/{h;s/=.*/=1/};${x;/^$/{s//net.ipv4.tcp_syncookies=1/;H};x}' /etc/sysctl.conf
+/sbin/sysctl -w net.ipv4.tcp_syncookies=1 
+/sbin/sysctl -w net.ipv4.route.flush=0
+/bin/chmod 644 /etc/hosts.allow
+/bin/chmod 644 /etc/hosts.deny
+chkconfig auditd on
+cat audit_rules.txt >> /etc/audit/audit.rules
+/sbin/auditd –s disable
+/sbin/auditd –s enable
+yum install cronie-anacron
+chown root:root /etc/anacrontab 
+chmod og-rwx /etc/anacrontab
+chown root:root /etc/crontab 
+chmod og-rwx /etc/crontab
+chown root:root /etc/cron.hourly 
+chmod og-rwx /etc/cron.hourly
+chown root:root /etc/cron.daily
+chmod og-rwx /etc/cron.daily
+chown root:root /etc/cron.weekly 
+chmod og-rwx /etc/cron.weekly
+chown root:root /etc/cron.monthly 
+chmod og-rwx /etc/cron.monthly
+chown root:root /etc/cron.d 
+chmod og-rwx /etc/cron.d
+rm /etc/at.deny 
+touch /etc/at.allow
+chmod 600 /etc/ssh/sshd_config
+usermod -g 0 root
+useradd -D -f 34
+touch /etc/motd 
+echo "Authorized uses only. All activity may be \ monitored and reported." > /etc/issue 
+echo "Authorized uses only. All activity may be \ monitored and reported." > /etc/issue.net 
+chown root:root /etc/motd
+chmod 644 /etc/motd
+chown root:root /etc/issue
+chmod 644 /etc/issue
+chown root:root /etc/issue.net
+chmod 644 /etc/issue.net
+/bin/chmod 644 /etc/passwd
+/bin/chmod 000 /etc/shadow
+/bin/chmod 000 /etc/gshadow
+/bin/chmod 644 /etc/group
+/bin/chown root:root /etc/passwd
+/bin/chown root:root /etc/shadow
+/bin/chown root:root /etc/gshadow
+/bin/chown root:root /etc/group
