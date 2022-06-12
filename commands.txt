@@ -72,8 +72,8 @@ sed -i '/^net.ipv4.tcp_syncookies/{h;s/=.*/=1/};${x;/^$/{s//net.ipv4.tcp_syncook
 /bin/chmod 644 /etc/hosts.deny
 chkconfig auditd on
 cat audit_rules.txt >> /etc/audit/audit.rules
-/sbin/auditd –s disable
-/sbin/auditd –s enable
+/sbin/auditd -s disable
+/sbin/auditd -s enable
 yum install cronie-anacron
 chown root:root /etc/anacrontab 
 chmod og-rwx /etc/anacrontab
