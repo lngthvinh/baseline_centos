@@ -11,7 +11,7 @@ echo -e "\e[31m
 ╚══════╝ ╚═════╝  ╚═════╝    ╚═╝   ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚══════╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝\e[0m"
 
 
-file="commands"
+file="commands.txt"
 totalCmds=`wc -l $file | sed 's/[^0-9]//g'`
 echo -e "I am starting................................" >/dev/stderr
 echo -e "$totalCmds commands found................................\n" >/dev/stderr
